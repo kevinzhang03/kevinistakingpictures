@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faGithub, faTwitter, faTwitch } from '@fortawesome/free-brands-svg-icons';
+import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro' 
+import { faArchive } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
+      <FontAwesomeIcon icon={brands('github')} />
+      <FontAwesomeIcon icon={brands('twitter')} />
+      <FontAwesomeIcon icon={brands('twitch')} />
+      <FontAwesomeIcon icon={faArchive} />
+      <FontAwesomeIcon icon={regular('edit')} />
+      <FontAwesomeIcon icon={solid('archive')} />
     </div>
   );
 }
