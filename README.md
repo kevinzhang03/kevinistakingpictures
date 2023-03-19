@@ -9,3 +9,7 @@ I have a FUCK ton planned for this new and improved site like a blog and store (
 # support me
 
 please
+
+#special thanks
+
+sammi
