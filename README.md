@@ -10,6 +10,6 @@ I have a FUCK ton planned for this new and improved site like a blog and store (
 
 please
 
-#special thanks
+# special thanks
 
 sammi
