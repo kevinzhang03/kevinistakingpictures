@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('satoshi.css');
+@import url('minimal-mono.css');
+
+body {
+  margin: 0;
+  padding: 8rem;
+  font-family: 'Satoshi-Regular', sans-serif;
+  background-color: antiquewhite;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+::selection {
+  background-color: #ddbd9280;
+  /* color: white; */
+}

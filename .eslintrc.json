@@ -36,11 +36,12 @@
             "error",
             "always"
         ],
-        "max-len": [
-            "warn", {
-                "code": 120
-            }
-        ]
+        // "max-len": [
+        //     "warn", {
+        //         "code": 120
+        //     }
+        // ],
+        "react/no-unescaped-entities": "off"
     },
     "settings": {
         "react": {

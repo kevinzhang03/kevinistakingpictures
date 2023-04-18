@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Minimal-Mono-Regular';
+  src: url('../fonts/minimal-mono/Minimal-Mono-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Minimal-Mono-Bold';
+  src: url('../fonts/minimal-mono/Minimal-Mono-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Minimal-Mono-Black';
+  src: url('../fonts/minimal-mono/Minimal-Mono-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
