@@ -1,8 +1,8 @@
 import React from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-// import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { solid, brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 
-import { Home, Analog, Blog, About, Resume } from '../../Pages/pageIndex';
+import { Home, Analog, Blog, About, Secret } from '../../Pages/pageIndex';
 
 interface NavLink {
   title: string;
@@ -14,6 +14,17 @@ interface NavLink {
 
 export interface NavData {
   links: NavLink[];
+}
+
+interface SocialLink {
+  platform: string;
+  link: string;
+  icon: IconDefinition;
+  className?: string;
+}
+
+export interface socialData {
+  links: SocialLink[];
 }
 
 export const navLinks: NavData = {
@@ -43,10 +54,35 @@ export const navLinks: NavData = {
       // icon: solid('address-card'),
     },
     {
-      title: 'resume',
-      path: '/resume',
-      page: <Resume />,
+      title: 'secret',
+      path: '/secret',
+      page: <Secret />,
       // icon: solid('file-lines'),
+    },
+  ]
+};
+
+export const socialLinks: socialData = {
+  links: [
+    {
+      platform: 'instagram',
+      link: 'string',
+      icon: brands('instagram-square'),
+    },
+    {
+      platform: 'github',
+      link: 'string',
+      icon: brands('github-square'),
+    },
+    {
+      platform: 'linkedin',
+      link: 'string',
+      icon: brands('linkedin'),
+    },
+    {
+      platform: 'email',
+      link: 'string',
+      icon: solid('envelope-square'),
     },
   ]
 };

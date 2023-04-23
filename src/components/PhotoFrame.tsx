@@ -44,17 +44,20 @@ function PhotoFrame({ photo, alt, story, title, date, settingsAnalog, settingsDi
         </h3>
       )}
       <button>
-        <img src={require('../images/photographs/sunset-calgary.jpg')} alt={alt} className="w-full" />
-        {/* <img src={require(photo)} alt={alt} className="w-full" /> */}
+        <img
+          src={photo}
+          alt={alt}
+          className="w-full select-none pointer-events-none"
+        />
       </button>
-      <div className='font-display text-caption flex justify-between mt-1 italic opacity-50'>
+      <div className="font-display text-caption flex justify-between mt-1 italic opacity-50">
         <div>
           {AnalogSettings(settingsAnalog)}
           {DigitalSettings(settingsDigital)}
         </div>
         {date && (<span>{date}</span>)}
       </div>
-      <p className='mt-4'>
+      <p className="mt-4">
         {story}
       </p>
     </div>

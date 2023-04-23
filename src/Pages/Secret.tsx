@@ -2,7 +2,7 @@ import React from 'react';
 
 import GenericPage from './GenericPage';
 
-function Resume() {
+function Secret() {
   return (
     <GenericPage>
       <h1>
@@ -15,4 +15,4 @@ function Resume() {
   );
 }
 
-export default Resume;
+export default Secret;
