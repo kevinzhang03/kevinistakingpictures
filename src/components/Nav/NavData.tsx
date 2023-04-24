@@ -66,22 +66,22 @@ export const socialLinks: socialData = {
   links: [
     {
       platform: 'instagram',
-      link: 'string',
+      link: 'https://www.instagram.com/kevinistakingpictures/',
       icon: brands('instagram-square'),
     },
     {
       platform: 'github',
-      link: 'string',
+      link: 'https://github.com/kevinzhangTT',
       icon: brands('github-square'),
     },
     {
       platform: 'linkedin',
-      link: 'string',
+      link: 'https://www.linkedin.com/in/kevin-zhang-uwaterloo/',
       icon: brands('linkedin'),
     },
     {
       platform: 'email',
-      link: 'string',
+      link: 'mailto:kevin9019888@gmail.com',
       icon: solid('envelope-square'),
     },
   ]

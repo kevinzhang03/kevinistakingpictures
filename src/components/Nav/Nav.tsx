@@ -90,9 +90,9 @@ function SocialMap() {
   return (
     <div>
       {socialLinks.links.map((link, index) => (
-        <button key={index} className="px-4 text-2xl">
+        <a key={index} href={link.link} target="_blank" rel="noreferrer" className="px-4 text-2xl">
           <FontAwesomeIcon icon={link.icon}/>
-        </button>
+        </a>
       ))}
     </div>
   );
