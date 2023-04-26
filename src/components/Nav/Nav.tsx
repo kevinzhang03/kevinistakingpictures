@@ -20,8 +20,7 @@ function Nav() {
   return (
     <div>
       {isDesktop ? (
-        // <nav className="w-64 p-4">
-        <nav className="flex-none w-64 p-8">
+        <nav className="sticky top-8 lg:top-16 flex-none w-64 p-8">
           <img
             src={require('./../../images/me-square-500px.jpg')}
             alt="it's me"
@@ -29,18 +28,18 @@ function Nav() {
           />
           <LinkMap isDesktop={isDesktop} />
           <div className="flex justify-end">
-            <SocialMap isDesktop={isDesktop} />
+            <SocialMap />
           </div>
         </nav>
       ) : (
-        <div>
+        <nav>
           <AnimatePresence>
             {showLinkMap && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.75, ease: [.15,.5,.5,1] }}
+                transition={{ duration: 0.75, ease: [0.15, 0.5, 0.5, 1] }}
                 // transition={{ duration: 0.75, ease: [0.5,0,0.5,1] }}
               >
                 <div className="text-center">
@@ -51,7 +50,7 @@ function Nav() {
             )}
           </AnimatePresence>
           <div className="flex justify-between px-4">
-            <SocialMap isDesktop={isDesktop} />
+            <SocialMap />
             <button
               onClick={() => setShowLinkMap(!showLinkMap)}
               className="px-4 text-2xl"
@@ -59,7 +58,7 @@ function Nav() {
               <FontAwesomeIcon icon={solid('bars')} />
             </button>
           </div>
-        </div>
+        </nav>
       )}
     </div>
   );
@@ -77,7 +76,7 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
           )}
         >
           <Link to={link.path} className="hover:line-through hover:font-bold">
-            <span className="select-none">
+            <span className="select-none text-base">
               {link.title}
             </span>
             {link.icon && (
@@ -90,7 +89,7 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
   );
 }
 
-function SocialMap({ isDesktop }: { isDesktop: boolean }) {
+function SocialMap() {
   return (
     <div>
       {socialLinks.links.map((link, index) => (
@@ -99,9 +98,7 @@ function SocialMap({ isDesktop }: { isDesktop: boolean }) {
           href={link.link}
           target="_blank"
           rel="noreferrer"
-          className={clsx(
-            isDesktop ? 'px-2 text-xl' : 'px-4 text-2xl'
-          )}
+          className="text-black opacity-75 hover:opacity-100 px-4 text-2xl md:ml-4 md:p-0 md:text-xl"
         >
           <FontAwesomeIcon icon={link.icon}/>
         </a>
