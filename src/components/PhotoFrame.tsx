@@ -43,7 +43,7 @@ function PhotoFrame({ photo, alt, story, title, date, settingsAnalog, settingsDi
           {title}
         </h3>
       )}
-      <button>
+      <button className="w-full">
         <img
           src={photo}
           alt={alt}

@@ -6,21 +6,27 @@ import clsx from 'clsx';
 import Nav from './components/Nav/Nav';
 import { navLinks } from './components/Nav/NavData';
 
+import Footer from './components/Footer';
+
+import Home from './Pages/Home';
+
 function App() {
   const isDesktop = useBreakpoint() > 768;
 
   return (
-    <div className={clsx(isDesktop ? 'container mx-auto flex my-32' : 'my-8')}>
-      <Router>
-        <Nav />
-        <div className="flex-1">
+    <div>
+      {/* <div className={clsx(isDesktop ? 'container flex mx-auto mt-32' : 'my-8')}> */}
+      <div className={clsx(isDesktop ? 'flex mt-16 lg:ml-16' : 'my-8')}>
+        <Router>
+          <Nav />
           <Routes>
             {navLinks.links.map((link, index) => (
               <Route key={index} path={link.path} element={link.page} />
             ))}
           </Routes>
-        </div>
-      </Router>
+        </Router>
+      </div>
+      <Footer />
     </div>
   );
 }

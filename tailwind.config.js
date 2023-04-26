@@ -2,13 +2,13 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
-    },
+    // screens: {
+    //   'sm': '640px',
+    //   'md': '768px',
+    //   'lg': '1024px',
+    //   'xl': '1280px',
+    //   '2xl': '1536px',
+    // },
     fontFamily: {
       sans:    ['Satoshi-Regular', 'sans-serif'],
       display: ['Minimal-Mono-Regular', 'monospace'],
@@ -25,7 +25,14 @@ module.exports = {
       '5xl':   '3rem',
       '6xl':   '4rem',
     },
-    extend: {},
+    extend: {
+      width: {
+        md: '100%',
+        lg: '768px',
+        xl: '1024px',
+        '2xl': '1280px',
+      }
+    },
   },
   plugins: [],
 };

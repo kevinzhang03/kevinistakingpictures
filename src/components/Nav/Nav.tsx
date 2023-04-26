@@ -20,13 +20,17 @@ function Nav() {
   return (
     <div>
       {isDesktop ? (
-        <nav className="w-64 p-4">
+        // <nav className="w-64 p-4">
+        <nav className="flex-none w-64 p-8">
           <img
             src={require('./../../images/me-square-500px.jpg')}
             alt="it's me"
-            className="mb-8 w-full select-none pointer-events-none"
+            className="sticky mb-8 w-full select-none pointer-events-none"
           />
           <LinkMap isDesktop={isDesktop} />
+          <div className="flex justify-end">
+            <SocialMap isDesktop={isDesktop} />
+          </div>
         </nav>
       ) : (
         <div>
@@ -36,7 +40,7 @@ function Nav() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.75, ease: [.14,.34,.32,1] }}
+                transition={{ duration: 0.75, ease: [.15,.5,.5,1] }}
                 // transition={{ duration: 0.75, ease: [0.5,0,0.5,1] }}
               >
                 <div className="text-center">
@@ -47,7 +51,7 @@ function Nav() {
             )}
           </AnimatePresence>
           <div className="flex justify-between px-4">
-            <SocialMap />
+            <SocialMap isDesktop={isDesktop} />
             <button
               onClick={() => setShowLinkMap(!showLinkMap)}
               className="px-4 text-2xl"
@@ -68,7 +72,7 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
         <li
           key={index}
           className={clsx(
-            isDesktop ? 'text-right text-lg mt-4 ' : 'text-center text-xl mt-4',
+            isDesktop ? 'text-right text-lg my-4 ' : 'text-center text-xl mt-4',
             'text-black/75 font-display'
           )}
         >
@@ -86,11 +90,19 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
   );
 }
 
-function SocialMap() {
+function SocialMap({ isDesktop }: { isDesktop: boolean }) {
   return (
     <div>
       {socialLinks.links.map((link, index) => (
-        <a key={index} href={link.link} target="_blank" rel="noreferrer" className="px-4 text-2xl">
+        <a
+          key={index}
+          href={link.link}
+          target="_blank"
+          rel="noreferrer"
+          className={clsx(
+            isDesktop ? 'px-2 text-xl' : 'px-4 text-2xl'
+          )}
+        >
           <FontAwesomeIcon icon={link.icon}/>
         </a>
       ))}

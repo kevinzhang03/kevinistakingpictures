@@ -7,7 +7,7 @@ function Home() {
   return (
     <GenericPage>
       <h1 className="text-5xl font-bold font-display mb-4">
-        welcome to my new site!
+        i should have just used squarespace
       </h1>
       <p className="mb-2 text-base">
         Welcome to my site! It ain't much, but it's my little passion project and I'm glad to have at
