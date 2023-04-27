@@ -37,7 +37,7 @@ function PhotoFrame({ photo, alt, story, title, date, settingsAnalog, settingsDi
   }
 
   return (
-    <div className="bg-white p-4 my-10">
+    <div className="bg-white p-4 my-10 drop-shadow-lg">
       {title && (
         <h3 className="text-2xl font-medium text-center font-display mb-4">
           {title}

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { navLinks, socialLinks } from './NavData';
 import useBreakpoint from '../Hooks/useBreakpoint';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,11 +16,18 @@ function Nav() {
   const isDesktop = useBreakpoint() > 768;
 
   const [showLinkMap, setShowLinkMap] = useState(false);
+
+  // Collapses the mobile nav menu whenever desktop mode is enabled
+  useEffect(() => {
+    if (isDesktop) {
+      setShowLinkMap(false);
+    }
+  }, [isDesktop]);
   
   return (
     <div>
       {isDesktop ? (
-        <nav className="sticky top-8 lg:top-16 flex-none w-64 p-8">
+        <nav className="sticky top-8 lg:top-16 flex-none w-64 p-8 mb-8 lg:mb-16">
           <img
             src={require('./../../images/me-square-500px.jpg')}
             alt="it's me"
@@ -72,7 +79,7 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
           key={index}
           className={clsx(
             isDesktop ? 'text-right text-lg my-4 ' : 'text-center text-xl mt-4',
-            'text-black/75 font-display'
+            'text-black opacity-75 hover:opacity-100 font-display'
           )}
         >
           <Link to={link.path} className="hover:line-through hover:font-bold">
@@ -89,7 +96,7 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
   );
 }
 
-function SocialMap() {
+export function SocialMap() {
   return (
     <div>
       {socialLinks.links.map((link, index) => (
@@ -98,7 +105,9 @@ function SocialMap() {
           href={link.link}
           target="_blank"
           rel="noreferrer"
-          className="text-black opacity-75 hover:opacity-100 px-4 text-2xl md:ml-4 md:p-0 md:text-xl"
+          className="px-4 text-2xl
+            text-black opacity-75 hover:opacity-100
+            md:ml-4 md:p-0 md:text-xl"
         >
           <FontAwesomeIcon icon={link.icon}/>
         </a>

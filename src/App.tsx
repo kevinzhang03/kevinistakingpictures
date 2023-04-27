@@ -3,18 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import useBreakpoint from './components/Hooks/useBreakpoint';
 import clsx from 'clsx';
 
-import Nav from './components/Nav/Nav';
-import { navLinks } from './components/Nav/NavData';
+import Nav from './components/Navigation/Nav';
+import { navLinks } from './components/Navigation/NavData';
 
 import Footer from './components/Footer';
+import ScrollTopButton from './components/ScrollTopButton';
 
 function App() {
   const isDesktop = useBreakpoint() > 768;
 
   return (
-    <div>
+    <div className="bg-antique-100 min-h-screen flex flex-col">
       {/* <div className={clsx(isDesktop ? 'container flex mx-auto mt-32' : 'my-8')}> */}
-      <div className={clsx(isDesktop ? 'flex mt-8 lg:mt-16 lg:ml-16' : 'my-8')}>
+      <div className={clsx('flex-grow', isDesktop ? 'flex mt-8 lg:mt-16 lg:ml-16' : 'my-8')}>
         <Router>
           <Nav />
           <Routes>
@@ -25,6 +26,7 @@ function App() {
         </Router>
       </div>
       <Footer />
+      <ScrollTopButton />
     </div>
   );
 }
