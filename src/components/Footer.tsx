@@ -9,7 +9,7 @@ function Footer() {
           ©2023 Kevin Zhang
         </p>
         <p className="font-display">
-          ©2023 Kevin Zhang
+          powered by sammi
         </p>
       </div>
     </>

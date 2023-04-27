@@ -78,7 +78,7 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
         <li
           key={index}
           className={clsx(
-            isDesktop ? 'text-right text-lg my-4 ' : 'text-center text-xl mt-4',
+            isDesktop ? 'text-right text-lg my-4 ' : 'text-center text-xl py-2',
             'text-black opacity-75 hover:opacity-100 font-display'
           )}
         >

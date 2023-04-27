@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import clsx from 'clsx';
+
 //! KNOWN BUG: if the button is pressed before the appearance animation is finished then the button will still
 //! disappear but not scroll, leaving the user stuck where they are
 
@@ -12,7 +14,9 @@ function ScrollTopButton() {
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      window.scrollY > 100 ? setButtonVisible(true) : setButtonVisible(false);
+      window.scrollY > 512
+        ? setButtonVisible(true)
+        : setButtonVisible(false);
     });
   }, []);
 
@@ -35,14 +39,18 @@ function ScrollTopButton() {
       {buttonVisible && !buttonClicked && (
         <motion.button
           onClick={scrollUp}
-          className="
-            fixed bottom-16 right-16 p-4 rounded-full
-            border border-antique-700/75
-            backdrop-brightness-110
-            hover:backdrop-brightness-200
-            backdrop-blur-sm
-            text-antique-700/75 drop-shadow-lg
-          "
+          className={clsx(
+            'w-12 h-12 rounded-full',
+            'fixed bottom-4 right-4 md:bottom-16 md:right-16',
+            'border border-antique-700/75',
+            'backdrop-brightness-110',
+            'backdrop-saturate-150',
+            'hover:backdrop-brightness-150',
+            'backdrop-blur-sm',
+            'text-antique-700/75',
+            'drop-shadow',
+          )}
+          
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

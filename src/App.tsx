@@ -14,7 +14,9 @@ function App() {
 
   return (
     <div className="bg-antique-100 min-h-screen flex flex-col">
-      {/* <div className={clsx(isDesktop ? 'container flex mx-auto mt-32' : 'my-8')}> */}
+      {
+        //! Use breakpoints rather than isDesktop for responsiveness
+      }
       <div className={clsx('flex-grow', isDesktop ? 'flex mt-8 lg:mt-16 lg:ml-16' : 'my-8')}>
         <Router>
           <Nav />

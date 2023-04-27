@@ -6,7 +6,7 @@ import PhotoFrame from '../components/PhotoFrame';
 function Home() {
   return (
     <GenericPage>
-      <h1 className="text-5xl font-bold font-display mb-4">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4">
         i should have just used squarespace
       </h1>
       <p className="mb-2 text-base">
