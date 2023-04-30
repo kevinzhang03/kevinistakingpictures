@@ -2,7 +2,7 @@ import React from 'react';
 
 import GenericPage from './GenericPage';
 
-function About() {
+export default function About() {
   return (
     <GenericPage>
       <h1>
@@ -14,5 +14,3 @@ function About() {
     </GenericPage>
   );
 }
-
-export default About;

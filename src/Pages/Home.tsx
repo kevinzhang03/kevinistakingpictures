@@ -3,7 +3,7 @@ import React from 'react';
 import GenericPage from './GenericPage';
 import PhotoFrame from '../components/PhotoFrame';
 
-function Home() {
+export default function Home() {
   return (
     <GenericPage>
       <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4">
@@ -52,5 +52,3 @@ function Home() {
     </GenericPage>
   );
 }
-
-export default Home;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer() {
+export default function Footer() {
   return (
     //! CONFIGURE CUSTOM COLOURS IN TAILWIND CONFIG FILE!!!
     <>
@@ -15,5 +15,3 @@ function Footer() {
     </>
   );
 }
-
-export default Footer;

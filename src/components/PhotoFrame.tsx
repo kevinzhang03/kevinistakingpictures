@@ -29,7 +29,7 @@ function hasSetting<Type>(setting: Type | undefined): setting is Type {
   return !!setting;
 }
 
-function PhotoFrame({ photo, alt, story, title, date, settingsAnalog, settingsDigital }: PhotoFrameProps) {
+export default function PhotoFrame({ photo, alt, story, title, date, settingsAnalog, settingsDigital }: PhotoFrameProps) {
 
   // Throw an error if both digital and analog settings are defined
   if (hasSetting(settingsDigital) && hasSetting(settingsAnalog)) {
@@ -92,5 +92,3 @@ function DigitalSettings(settingsDigital) {
     </div>
   );
 }
-
-export default PhotoFrame;

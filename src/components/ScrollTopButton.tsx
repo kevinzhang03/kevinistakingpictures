@@ -8,7 +8,7 @@ import clsx from 'clsx';
 //! KNOWN BUG: if the button is pressed before the appearance animation is finished then the button will still
 //! disappear but not scroll, leaving the user stuck where they are
 
-function ScrollTopButton() {
+export default function ScrollTopButton() {
   const [buttonVisible, setButtonVisible] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
 
@@ -64,5 +64,3 @@ function ScrollTopButton() {
     </AnimatePresence>
   );
 }
-
-export default ScrollTopButton;

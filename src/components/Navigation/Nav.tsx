@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // import { theme } from '../../../tailwind.config.js';
 
-function Nav() {
+export default function Nav() {
 
   //! CHANGE 768 TO USE THE VALUE FROM TAILWIND.CONFIG.JS.THEME.SCREENS.MD
   const isDesktop = useBreakpoint() > 768;
@@ -115,5 +115,3 @@ export function SocialMap() {
     </div>
   );
 }
-
-export default Nav;

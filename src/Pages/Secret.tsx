@@ -2,7 +2,7 @@ import React from 'react';
 
 import GenericPage from './GenericPage';
 
-function Secret() {
+export default function Secret() {
   return (
     <GenericPage>
       <h1>
@@ -14,5 +14,3 @@ function Secret() {
     </GenericPage>
   );
 }
-
-export default Secret;

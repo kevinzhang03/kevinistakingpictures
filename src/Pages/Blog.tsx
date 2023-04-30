@@ -2,7 +2,7 @@ import React from 'react';
 
 import GenericPage from './GenericPage';
 
-function Blog() {
+export default function Blog() {
   return (
     <GenericPage>
       <h1>
@@ -14,5 +14,3 @@ function Blog() {
     </GenericPage>
   );
 }
-
-export default Blog;

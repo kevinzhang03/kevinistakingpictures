@@ -2,7 +2,7 @@ import React from 'react';
 
 import GenericPage from './GenericPage';
 
-function Analog() {
+export default function Analog() {
   return (
     <GenericPage>
       <h1>
@@ -28,5 +28,3 @@ function Analog() {
     </GenericPage>
   );
 }
-
-export default Analog;
