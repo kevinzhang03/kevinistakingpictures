@@ -38,7 +38,7 @@ export default function InputText({
       readOnly={readonly}
       onChange={onChange}
       className={clsx(
-        className ? className : 'block w-full lg:w-64',
+        className ? className : 'block w-full',
         'p-2 bg-white border border-antique-200 rounded-sm text-sm select-none',
         'placeholder:italic placeholder:text-antique-500/50',
         'focus:outline-none focus:border-periwinkle-200 focus:ring-1 focus:ring-periwinkle-200',

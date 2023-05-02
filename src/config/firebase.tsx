@@ -1,6 +1,8 @@
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAt88Mwy53iMzhSu6WQtxsfE0pUtN0v6hM',
@@ -14,4 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+
 export const providerGoogle = new GoogleAuthProvider();
+export const providerGithub = new GithubAuthProvider();
+
+export const database = getFirestore(app);
+export const storage = getStorage(app);
