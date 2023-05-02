@@ -79,7 +79,8 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
           key={index}
           className={clsx(
             isDesktop ? 'text-right text-lg my-4 ' : 'text-center text-xl py-2',
-            'text-black opacity-75 hover:opacity-100 font-display'
+            'text-black opacity-75 hover:opacity-100 font-display',
+            'transition-opacity duration-300'
           )}
         >
           <Link to={link.path} className="hover:line-through hover:font-bold">
@@ -107,7 +108,8 @@ export function SocialMap() {
           rel="noreferrer"
           className="px-4 text-2xl
             text-black opacity-75 hover:opacity-100
-            md:ml-4 md:p-0 md:text-xl"
+            md:ml-4 md:p-0 md:text-xl
+            transition-all duration-300"
         >
           <FontAwesomeIcon icon={link.icon}/>
         </a>

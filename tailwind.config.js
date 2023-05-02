@@ -27,6 +27,7 @@ module.exports = {
       },
       colors: {
         'antique': {
+          50 : '#fcf4e8',
           100: '#faebd7',
           200: '#e6d4bc',
           300: '#cfbca3',
@@ -36,6 +37,7 @@ module.exports = {
           700: '#735c3f',
           800: '#5c4426',
           900: '#452c0d',
+          950: '#33200a',
         },
         'periwinkle': {
           50 : '#e8e6ff',
