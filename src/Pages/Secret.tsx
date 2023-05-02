@@ -1,8 +1,8 @@
 import React from 'react';
 
 import GenericPage from './GenericPage';
-import FirebaseLogin from '../components/FirebaseLogin';
-import FirebaseFileUpload from '../components/FirebaseFileUpload';
+import FirebaseLogin from '../components/Firebase/FirebaseLogin';
+import FirebaseFileUpload from '../components/Firebase/FirebaseFileUpload';
 
 export default function Secret() {
   return (

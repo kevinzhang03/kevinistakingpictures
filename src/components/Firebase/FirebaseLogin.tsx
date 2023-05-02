@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 
-import { auth, providerGoogle, providerGithub } from '../config/firebase';
+import { auth, providerGoogle, providerGithub } from './config/firebase';
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from '@firebase/auth';
-import InputText from './Atoms/InputText';
+import InputText from '../Atoms/InputText';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { brands } from '@fortawesome/fontawesome-svg-core/import.macro';
