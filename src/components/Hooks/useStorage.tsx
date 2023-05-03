@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { ref, StorageError, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../Firebase/config/firebase';
+import { storage, database } from '../Firebase/config/firebase';
 
 export const useStorage = (file: File) => {
   const [progress, setProgress] = useState(0);
@@ -19,7 +19,6 @@ export const useStorage = (file: File) => {
     }, async () => {
       await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         setUrl(downloadURL);
-        console.log('File available at', downloadURL);
       });
     });
   }, [file]);

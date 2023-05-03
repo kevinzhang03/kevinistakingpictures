@@ -20,5 +20,5 @@ export const auth = getAuth(app);
 export const providerGoogle = new GoogleAuthProvider();
 export const providerGithub = new GithubAuthProvider();
 
-export const database = getFirestore(app);
 export const storage = getStorage(app);
+export const database = getFirestore(app);
