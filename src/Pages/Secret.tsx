@@ -14,10 +14,10 @@ export default function Secret() {
         Well, right now there's not really a use for signing in. Mainly just playing around with what Firebase can do.
         However, I do plan on adding some features to this site that will make use of user accounts...
       </p>
-      <div className="w-full p-8 lg:flex justify-evenly bg-white/50 rounded-3xl shadow-lg">
+      <div className="w-full p-8 my-8 lg:flex justify-evenly bg-white/50 rounded-3xl shadow-lg">
         <FirebaseLogin />
-        <FirebaseFileUpload />
       </div>
+      <FirebaseFileUpload />
     </GenericPage>
   );
 }

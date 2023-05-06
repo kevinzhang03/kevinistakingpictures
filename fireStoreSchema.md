@@ -1,24 +1,20 @@
-* **IMAGES**
-	* *set*
+* **COLLECTION**, collection
+	* *set*, document
 		* `name: string`
 		* `year: number`
 		* `location: string`
-			* **PHOTOGRAPHS**
-				* *photo*
+			* **PHOTOGRAPHS**, collection
+				* *photo*, document
 					* `url: string`
 					* `title: string`
 					* `alt: string`
 					* `date: string`
 					* `story: string`
-						* **SETTINGS**
-							* *digital*
-								* `camera: string`
-								* `camera: string`
-								* `focalLength: string`
-								* `aperture: string`
-								* `shutterSpeed: string`
-								* `ISO: number`
-							* *analog*
-	    						* `camera: string`
-	    						* `film: string`
-	    						* `lens: string`
+    				* `settings: map`
+						* `{camera: string,`
+   						* `film: string,`
+   						* `lens: string,`
+						* `focalLength: string,`
+						* `aperture: string,`
+						* `shutterSpeed: string,`
+						* `ISO: number,}`

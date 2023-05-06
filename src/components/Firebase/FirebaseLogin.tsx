@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuthStateChanged } from '../Hooks/useAuthStateChanged';
 
 import { auth, providerGoogle, providerGithub } from './config/firebase';
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from '@firebase/auth';
@@ -8,9 +9,16 @@ import InputText from '../Atoms/InputText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 
+//TODO do not allow users to sign in when already signed in
+
 export default function FirebaseLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useAuthStateChanged(isAuthenticated => {
+    setAuthenticated(isAuthenticated);
+  }); 
 
   const signIn = async () => {
     try {
@@ -45,14 +53,17 @@ export default function FirebaseLogin() {
   };
 
   return (
-    <div className="w-full lg:w-72 flex flex-col gap-y-4">
+    <div className="w-full lg:w-4/12 flex flex-col gap-y-4">
       <InputText
+        type="email"
         placeholder="email"
+        disabled={authenticated}
         onChange={(e) => setEmail(e.target.value)}
       />
       <InputText
-        password
+        type="password"
         placeholder="password"
+        disabled={authenticated}
         onChange={(e) => setPassword(e.target.value)}
       />
       <div className="flex w-full h-10 space-x-2">
@@ -95,9 +106,9 @@ export default function FirebaseLogin() {
           sign out
         </button>
       </div>
-      {auth.currentUser ? (
+      {authenticated ? (
         <span className="text-antique-700">
-          signed in as: {auth.currentUser.email}
+          signed in as: {auth.currentUser?.email}
         </span>
       ) : (
         <span className="italic text-antique-500/50">
