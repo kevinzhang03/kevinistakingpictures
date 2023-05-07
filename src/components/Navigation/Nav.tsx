@@ -93,6 +93,11 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
           </Link>
         </li>
       ))}
+      <li>
+        <Link to={'analog'}>
+          analog manual
+        </Link>
+      </li>
     </ul>
   );
 }

@@ -1,94 +1,56 @@
 import React from 'react';
-
-// import gas_station from '../images/photographs/gas-station.jpg';
+import { cameraSettings } from './Hooks/useStoragePhoto';
 
 interface PhotoFrameProps {
-  photo: string;
+  url: string;
+  title: string;
   alt: string;
+  date: string;
   story: string;
-  title?: string;
-  date?: string;
-
-  settingsDigital?: {
-    camera: string;
-    focalLength?: string;
-    aperture?: string;
-    shutterSpeed?: string;
-    ISO?: number;
-  } | undefined;
-
-  settingsAnalog?: {
-    camera: string;
-    film: string;
-    lens?: string;
-  };
+  settings: cameraSettings;
 }
 
-// Type guard to check if a setting is defined
-function hasSetting<Type>(setting: Type | undefined): setting is Type {
-  return !!setting;
-}
-
-export default function PhotoFrame({ photo, alt, story, title, date, settingsAnalog, settingsDigital }: PhotoFrameProps) {
-
-  // Throw an error if both digital and analog settings are defined
-  if (hasSetting(settingsDigital) && hasSetting(settingsAnalog)) {
-    throw new Error('Both digital and analog settings cannot be defined at the same time.');
-  }
-
+export default function PhotoFrame({ url, title, alt, date, story, settings }: PhotoFrameProps) {
   return (
-    <div className="bg-white p-4 my-10 drop-shadow-lg">
+    <div className="bg-white flex flex-col gap-y-4 p-4 my-10 drop-shadow-lg">
       {title && (
-        <h3 className="text-2xl font-medium text-center font-display mb-4">
+        <h3 className="cursor-default text-2xl font-medium text-center font-display">
           {title}
         </h3>
       )}
       <button className="w-full">
         <img
-          src={photo}
+          src={url}
           alt={alt}
           className="w-full select-none pointer-events-none"
         />
       </button>
-      <div className="font-display text-caption flex justify-between mt-1 italic opacity-50">
-        <div>
-          {AnalogSettings(settingsAnalog)}
-          {DigitalSettings(settingsDigital)}
-        </div>
-        {date && (<span>{date}</span>)}
+      <div className="font-display cursor-default text-caption flex justify-between mt-[-0.75rem] italic opacity-50">
+        {Settings(settings)}
+        {date && (<span className="ml-auto">{date}</span>)}
       </div>
-      <p className="mt-4">
-        {story}
-      </p>
+      {story && (<p>{story}</p>)}
     </div>
   );
 }
 
-function AnalogSettings(settingsAnalog) {
+// Lists field of cameraSettings, separated by commas and a pipe
+function Settings(settings: cameraSettings) {
   return (
-    <div>
-      {settingsAnalog && (
+    <>
+      {settings && (
         <span>
-          {settingsAnalog.camera}{', '}
-          {settingsAnalog.film}{settingsAnalog.lens ? ', ' + settingsAnalog.lens : ''}
+          {
+            [
+              [settings.camera, settings.film, settings.lens],
+              [settings.focalLength, settings.aperture, settings.shutterSpeed, settings.iso],
+            ]
+              .map((fields) => fields.filter(Boolean).join(', '))
+              .filter(Boolean)
+              .join(' | ')
+          }
         </span>
       )}
-    </div>
-  );
-}
-
-function DigitalSettings(settingsDigital) {
-  return (
-    <div>
-      {settingsDigital && (
-        <span>
-          {settingsDigital.camera}{', '}
-          {settingsDigital.focalLength}{settingsDigital.focalLength ? ', ' : ''}
-          {settingsDigital.aperture}{settingsDigital.aperture ? ', ' : ''}
-          {settingsDigital.shutterSpeed}{settingsDigital.shutterSpeed ? ', ' : ''}
-          {'ISO '}{settingsDigital.ISO}
-        </span>
-      )}
-    </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuthStateChanged } from '../Hooks/useAuthStateChanged';
 
 import { auth, providerGoogle, providerGithub } from './config/firebase';
@@ -107,11 +107,11 @@ export default function FirebaseLogin() {
         </button>
       </div>
       {authenticated ? (
-        <span className="text-antique-700">
+        <span className="text-antique-900">
           signed in as: {auth.currentUser?.email}
         </span>
       ) : (
-        <span className="italic text-antique-500/50">
+        <span className="italic text-antique-700/50">
           you're not signed in
         </span>
       )}

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import InputText from '../Atoms/InputText';
 import ProgressBar from './ProgressBar';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useAuthStateChanged } from '../Hooks/useAuthStateChanged';
+import { useStoragePhotoArguments } from '../Hooks/useStoragePhoto';
 import clsx from 'clsx';
 
 export default function FirebaseFileUpload() {
@@ -10,6 +12,11 @@ export default function FirebaseFileUpload() {
   const [error, setError] = useState<string | null>(null);
   const [allFieldsValid, setAllFieldsValid] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useAuthStateChanged(isAuthenticated => {
+    setAuthenticated(isAuthenticated);
+  }); 
   
   const [set, setSet] = useState('');
   const [year, setYear] = useState(2023);
@@ -19,7 +26,7 @@ export default function FirebaseFileUpload() {
   const [alt, setAlt] = useState('');
   const [dateTaken, setDateTaken] = useState('');
   const [story, setStory] = useState('');
-
+  
   const [camera, setCamera] = useState('');
   const [film, setFilm] = useState('');
   const [lens, setLens] = useState('');
@@ -28,24 +35,27 @@ export default function FirebaseFileUpload() {
   const [shutterSpeed, setShutterSpeed] = useState('');
   const [iso, setIso] = useState('');
 
-  type DigitalSettings = {
-    camera?: string;
-    focalLength?: number;
-    aperture?: number;
-    shutterSpeed?: string;
-    ISO?: number;
-    other?: string;
-  };
+  const [includeSettings, setIncludeSettings] = useState(false);
   
-  type AnalogSettings = {
-    camera?: string;
-    film?: string;
-    lens?: string;
-    other?: string;
+  const useStorageArgs = {
+    file: file,
+    set: set == '' ? 'noSet' : replaceSpaces(set),
+    year: year,
+    location: location == '' ? 'nowhere_really' : replaceSpaces(location),
+    title: title,
+    alt: alt,
+    dateTaken: dateTaken,
+    story: story,
+    settings: includeSettings ? {
+      'camera': camera,
+      'film': film,
+      'lens': lens,
+      'focalLength': focalLength,
+      'aperture': aperture,
+      'shutterSpeed': shutterSpeed,
+      'iso': iso,
+    } : null
   };
-
-  const [settingType, setSettingsType] = useState(false);
-  const [cameraSettings, setCameraSettings] = useState<DigitalSettings | AnalogSettings | null>(null);
   
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -69,6 +79,17 @@ export default function FirebaseFileUpload() {
     }
   };
 
+  const resetSettings = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIncludeSettings(JSON.parse(e.target.value));
+    setCamera('');
+    setFilm('');
+    setLens('');
+    setFocalLength('');
+    setAperture('');
+    setShutterSpeed('');
+    setIso('');
+  };
+
   useEffect(() => {
     if (!(
       validateTextInput(set)
@@ -84,6 +105,7 @@ export default function FirebaseFileUpload() {
       setAllFieldsValid(true);
     }
     console.log('hook was called', allFieldsValid ? 'GOOD' : 'BAD');
+
   }, [set, year, location, title, alt, dateTaken, story]);
 
   // TODO jesus christ fix the fucking classNames for the file input element...
@@ -138,11 +160,12 @@ export default function FirebaseFileUpload() {
           "
         />
         <button
+          disabled={!authenticated}
           onClick={allowSubmit}
-          className="w-full p-2 select-none
-            text-periwinkle-700
+          className="w-full p-2 select-none text-periwinkle-700
             bg-periwinkle-200 hover:bg-periwinkle-300 active:bg-periwinkle-400
-            rounded-sm transition-color duration-300"
+            rounded-sm transition-color duration-300
+            disabled:pointer-events-none disabled:bg-antique-900/10 disabled:text-antique-900/20"
         >
           upload photograph
         </button>
@@ -158,20 +181,18 @@ export default function FirebaseFileUpload() {
                 Uploading {file.name}
               </span>
               <ProgressBar
-                file={file}
-                set={set == '' ? 'noSet' : replaceSpaces(set)}
-                year={year}
-                location={location == '' ? 'nowhere_really' : replaceSpaces(location)}
-                title={title}
-                alt={alt}
-                dateTaken={dateTaken}
-                story={story}
+                useStorageArgs={useStorageArgs as useStoragePhotoArguments}
                 setFile={setFile}
                 setSubmit={setSubmit}
               />
             </motion.div>
           )}
         </AnimatePresence>
+        {!authenticated && (
+          <span className="text-antique-700/50 italic text-xs">
+            please sign in before uploading a photo
+          </span>
+        )}
         {error && (
           <span className="text-xs italic text-red-500 select-none pointer-events-none">
             {error}
@@ -216,7 +237,7 @@ export default function FirebaseFileUpload() {
           story/caption
           <textarea
             id="caption or story"
-            placeholder='write a short caption for your picture, or the whole story of how you took this picture and what i means'
+            placeholder='write a short caption for your picture, or the whole story of how you took this picture and what it means'
             onChange={(e) => setStory(e.target.value)}
             className={clsx(
               'block w-full min-h-10 h-24 p-2',
@@ -237,9 +258,9 @@ export default function FirebaseFileUpload() {
                 defaultChecked
                 id="camera settings none"
                 type="radio"
-                name="settingType"
+                name="includeSettings"
                 value={false.toString()}
-                onChange={(e) => setSettingsType(JSON.parse(e.target.value))}
+                onChange={resetSettings}
                 className="w-4 h-4"
               />
               idc
@@ -248,16 +269,16 @@ export default function FirebaseFileUpload() {
               <input
                 id="camera settings digital"
                 type="radio"
-                name="settingType"
+                name="includeSettings"
                 value={true.toString()}
-                onChange={(e) => setSettingsType(JSON.parse(e.target.value))}
+                onChange={(e) => setIncludeSettings(JSON.parse(e.target.value))}
                 className="w-4 h-4"
               />
               nerd
             </label>
           </div>
         </label>
-        {settingType && (
+        {includeSettings && (
           <div className="flex flex-col gap-y-4">
             <label htmlFor="camera" className="text-xs text-antique-700/50">
             camera
@@ -343,23 +364,31 @@ export default function FirebaseFileUpload() {
                 />
               </label>
             </div>
-            <span>
-              focal length: {validateFocalLengthInput(focalLength) ? 'valid' : 'not valid'}
-            </span>
-            <span>
-              aperture: {validateApertureInput(aperture) ? 'valid' : 'not valid'}
-            </span>
-            <span>
-              shutter speed: {validateShutterSpeedInput(shutterSpeed) ? 'valid' : 'not valid'}
-            </span>
-            <span>
-              iso: {validateISOInput(iso) ? 'valid' : 'not valid'}
-            </span>
+            {!(validateTextInput(set) && validateTextInput(location) && validateNumberInput(year.toString())) && (
+              <span className="text-xs italic text-red-500 select-none pointer-events-none">
+                You messed up on at least one of the fields. Years 1800-2099 are allowed. Only use alphanumeric characters, and the following: !?_\-~@#&*(),.'"
+              </span>
+            )}
           </div>
         )}
-        {!(validateTextInput(title) && validateTextInput(alt) && validateTextInput(story)) && (
+        {!validateFocalLengthInput(focalLength) && (
           <span className="text-xs italic text-red-500 select-none pointer-events-none">
-            Your title, alt text, or caption contains invalid characters. Only use alphanumeric characters, and the following: !?_\-~@#&*(),.'"
+            Focal length format invalid. Valid examples: 14mm, 86mm, 400mm
+          </span>
+        )}
+        {!validateApertureInput(aperture) && (
+          <span className="text-xs italic text-red-500 select-none pointer-events-none">
+            Aperture format invalid. Valid examples: f/0.95, f/5.6, f/40
+          </span>
+        )}
+        {!validateShutterSpeedInput(shutterSpeed) && (
+          <span className="text-xs italic text-red-500 select-none pointer-events-none">
+            Shutter speed format invalid. Valid examples: 1/10s, 32s, 9.81s
+          </span>
+        )}
+        {!validateISOInput(iso) && (
+          <span className="text-xs italic text-red-500 select-none pointer-events-none">
+            Not sure how you screwed up the ISO. It's just the number...
           </span>
         )}
       </div>
@@ -384,28 +413,21 @@ function replaceSpaces(set: string): string {
 }
 
 function validateFocalLengthInput(input: string): boolean {
-  const regex = /^[1-9]\d*mm$/;
+  const regex = /^$|^[1-9][0-9]*mm$/;
   return regex.test(input);
 }
 
 function validateApertureInput(input: string): boolean {
-  const regex = /^f\/\d+(?:\.\d+)?$/;
+  const regex = /^$|^f\/\d+(?:\.\d+)?$/;
   return regex.test(input);
 }
 
 function validateShutterSpeedInput(input: string): boolean {
-  let regex: RegExp;
-  if (input.includes('/')) {
-    regex = /^1\/[1-9][0-9]*s$/;
-  } else if (input.includes('.')) {
-    regex = /^[0-9]\.\d*[1-9]s$/;
-  } else {
-    regex = /^[1-9]\d*s$/;
-  }
+  const regex = /^$|^1\/(?!1s)[1-9][0-9]*s$|^[1-9][0-9]*\.[0-9]*[1-9]s$|^[1-9][0-9]*s$/;
   return regex.test(input);
 }
 
 function validateISOInput(input: string): boolean {
-  const regex = /^[1-9]\d*$/;
+  const regex = /^$|^[1-9][0-9]*$/;
   return regex.test(input);
 }

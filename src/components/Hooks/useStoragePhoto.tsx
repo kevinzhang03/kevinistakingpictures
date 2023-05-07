@@ -4,18 +4,42 @@ import { ref, StorageError, uploadBytesResumable, getDownloadURL } from 'firebas
 import { serverTimestamp, setDoc, doc } from 'firebase/firestore';
 import { storage, database } from '../Firebase/config/firebase';
 
+export type cameraSettings = {
+  'camera': string,
+  'film': string,
+  'lens': string,
+  'focalLength': string,
+  'aperture': string,
+  'shutterSpeed': string,
+  'iso': string,
+} | null;
 
-export const useStoragePhoto = (file: File, set: string, setYear: number, setLocation: string, title: string, alt: string, dateTaken: string, story: string) => {
+export interface photoDocument {
+  title: string;
+  alt: string;
+  dateTaken: string;
+  story: string;
+  settings: cameraSettings;
+}
+
+export interface useStoragePhotoArguments extends photoDocument {
+  file: File;
+  set: string;
+  year: number;
+  location: string;
+}
+
+export const useStoragePhoto = (args: useStoragePhotoArguments) => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<StorageError | null>(null);
   const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const storageRef = ref(storage, `${set}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    const storageRef = ref(storage, `${args.set}/${args.file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, args.file);
     
-    const setDocumentRef =   doc(database, 'COLLECTION', set);
-    const photoDocumentRef = doc(database, 'COLLECTION', set, 'PHOTOGRAPHS', file.name);
+    const setDocumentRef =   doc(database, 'COLLECTION', args.set);
+    const photoDocumentRef = doc(database, 'COLLECTION', args.set, 'PHOTOGRAPHS', args.file.name);
     
     uploadTask.on('state_changed', (snapshot) => {
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -27,19 +51,20 @@ export const useStoragePhoto = (file: File, set: string, setYear: number, setLoc
         setUrl(downloadURL);
 
         {setDoc(setDocumentRef, {
-          name: set,
-          year: setYear,
-          location: setLocation,
+          name: args.set,
+          year: args.year,
+          location: args.location,
           createdAt: serverTimestamp(),
         });
         
         try {
           setDoc(photoDocumentRef, {
-            title: title,
-            alt: alt,
+            title: args.title,
+            alt: args.alt,
             url: downloadURL, 
-            dateTaken: dateTaken,
-            story: story,
+            dateTaken: args.dateTaken,
+            story: args.story,
+            settings: args.settings,
             createdAt: serverTimestamp(),
           });
           console.log('added doc');
@@ -48,13 +73,13 @@ export const useStoragePhoto = (file: File, set: string, setYear: number, setLoc
         }}
       });
 
-      console.log(file);
+      console.log(args.file);
 
       //! FIGURE OUT WHY IT IS ADDING THE DOCUMENT TWICE?????
       // https://firebase.google.com/docs/firestore/using-console?hl=en&authuser=0#non-existent_ancestor_documents
 
     });
-  }, [file, set, setYear, setLocation]);
+  }, [args.file, args.set, args.year, args.location]);
 
   return { progress, url, error };
   

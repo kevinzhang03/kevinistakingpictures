@@ -3,21 +3,15 @@ import {  useEffect } from 'react';
 import { useStoragePhoto } from '../Hooks/useStoragePhoto';
 import clsx from 'clsx';
 
+import { useStoragePhotoArguments } from '../Hooks/useStoragePhoto';
 interface progressBarProps {
-  file: File;
-  set: string;
-  year: number,
-  location: string,
-  title: string;
-  alt: string;
-  dateTaken: string;
-  story: string;
+  useStorageArgs: useStoragePhotoArguments;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
   setSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ProgressBar({ file, set, year, location, title, alt, dateTaken, story, setFile, setSubmit }: progressBarProps) {
-  const { url, progress, error } = useStoragePhoto(file, set, year, location, title, alt, dateTaken, story);
+export default function ProgressBar({ useStorageArgs, setFile, setSubmit }: progressBarProps) {
+  const { url, progress, error } = useStoragePhoto(useStorageArgs);
   
   // console.log(progress, url ? 'url exists' : null);
 
