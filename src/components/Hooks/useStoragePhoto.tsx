@@ -4,17 +4,39 @@ import { ref, StorageError, uploadBytesResumable, getDownloadURL } from 'firebas
 import { serverTimestamp, setDoc, doc } from 'firebase/firestore';
 import { storage, database } from '../Firebase/config/firebase';
 
+// Trims string, remove consecutive spaces and converts all spaces to underscores
+function replaceSpaces(set: string): string {
+  return set.trim().replace(/\s+/g, ' ').replace(/ /g, '_').replace(/_+/g, '_');
+}
+
+function removeFileExtension(filename: string): string {
+  const lastDotIndex = filename.lastIndexOf('.');
+  if (lastDotIndex === -1) {
+    return filename;
+  } else {
+    return filename.substring(0, lastDotIndex);
+  }
+}
+
 export type cameraSettings = {
-  'camera': string,
-  'film': string,
-  'lens': string,
-  'focalLength': string,
-  'aperture': string,
-  'shutterSpeed': string,
-  'iso': string,
+  camera: string,
+  film: string,
+  lens: string,
+  focalLength: string,
+  aperture: string,
+  shutterSpeed: string,
+  iso: string,
 } | null;
 
-export interface photoDocument {
+interface setArgs {
+  set: string;
+  existingSet: boolean;
+  year: number;
+  location: string;
+}
+
+export interface photoArgs extends setArgs {
+  file: File;
   title: string;
   alt: string;
   dateTaken: string;
@@ -22,24 +44,35 @@ export interface photoDocument {
   settings: cameraSettings;
 }
 
-export interface useStoragePhotoArguments extends photoDocument {
-  file: File;
-  set: string;
-  year: number;
-  location: string;
-}
-
-export const useStoragePhoto = (args: useStoragePhotoArguments) => {
+export const useStoragePhoto = (args: photoArgs) => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<StorageError | null>(null);
   const [url, setUrl] = useState<string | null>(null);
 
+  //-----------
+  const newSetNameID = replaceSpaces(args.set) + '_' + Date.now();
+  const photoNameID = replaceSpaces(removeFileExtension(args.file.name)) + '_' + Date.now();
+  //-----------
+
   useEffect(() => {
-    const storageRef = ref(storage, `${args.set}/${args.file.name}`);
+    const storageRef = ref(storage, `${newSetNameID}/${photoNameID}`);
     const uploadTask = uploadBytesResumable(storageRef, args.file);
+
+    // const topLevelCollectionRef = collection(database, 'COLLECTION');
     
-    const setDocumentRef =   doc(database, 'COLLECTION', args.set);
-    const photoDocumentRef = doc(database, 'COLLECTION', args.set, 'PHOTOGRAPHS', args.file.name);
+    // If the user specified to upload to an existing set, then upload to that one instead
+    const setDocumentRef = doc(
+      database,
+      'COLLECTION',
+      args.existingSet ? args.set : newSetNameID
+    );
+    const photoDocumentRef = doc(
+      database,
+      'COLLECTION',
+      args.existingSet ? args.set : newSetNameID,
+      'PHOTOGRAPHS',
+      photoNameID
+    );
     
     uploadTask.on('state_changed', (snapshot) => {
       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -49,8 +82,9 @@ export const useStoragePhoto = (args: useStoragePhotoArguments) => {
       await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 
         setUrl(downloadURL);
-
-        {setDoc(setDocumentRef, {
+        
+        // Do not overwrite the existing set
+        !args.existingSet && setDoc(setDocumentRef, {
           name: args.set,
           year: args.year,
           location: args.location,
@@ -66,17 +100,17 @@ export const useStoragePhoto = (args: useStoragePhotoArguments) => {
             story: args.story,
             settings: args.settings,
             createdAt: serverTimestamp(),
+            filename: args.file.name,
           });
           console.log('added doc');
         } catch(err) {
           setError(err);
-        }}
+        }
       });
 
       console.log(args.file);
 
       //! FIGURE OUT WHY IT IS ADDING THE DOCUMENT TWICE?????
-      // https://firebase.google.com/docs/firestore/using-console?hl=en&authuser=0#non-existent_ancestor_documents
 
     });
   }, [args.file, args.set, args.year, args.location]);

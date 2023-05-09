@@ -9,8 +9,12 @@ import { navLinks } from './components/Navigation/NavData';
 import Footer from './components/Footer';
 import ScrollTopButton from './components/ScrollTopButton';
 
+import PhotoSet from './Pages/PhotoSet';
+
 function App() {
   const isDesktop = useBreakpoint() > 768;
+
+  // const {sets} = useSets();
 
   return (
     <div className="bg-antique-100 min-h-screen flex flex-col">
@@ -24,6 +28,7 @@ function App() {
             {navLinks.links.map((link, index) => (
               <Route key={index} path={link.path} element={link.page} />
             ))}
+            <Route path='/set/:setID' element={<PhotoSet />}/>
           </Routes>
         </Router>
       </div>

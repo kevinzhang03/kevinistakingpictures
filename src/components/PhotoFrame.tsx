@@ -12,7 +12,7 @@ interface PhotoFrameProps {
 
 export default function PhotoFrame({ url, title, alt, date, story, settings }: PhotoFrameProps) {
   return (
-    <div className="bg-white flex flex-col gap-y-4 p-4 my-10 drop-shadow-lg">
+    <div className="bg-white flex flex-col gap-y-4 p-4 my-8 drop-shadow-lg">
       {title && (
         <h3 className="cursor-default text-2xl font-medium text-center font-display">
           {title}

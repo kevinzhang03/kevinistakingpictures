@@ -1,10 +1,13 @@
 import React from 'react';
 
 import GenericPage from './GenericPage';
-import PhotoSet from './PhotoSet';
 
 export default function Blog() {
   return (
-    <PhotoSet set={'calgary'} />
+    <GenericPage>
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display">
+        blog
+      </h1>
+    </GenericPage>
   );
 }

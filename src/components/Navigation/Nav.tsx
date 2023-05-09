@@ -2,21 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { navLinks, socialLinks } from './NavData';
+// import { setLinks } from './NavData';
 import useBreakpoint from '../Hooks/useBreakpoint';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import useSets from '../Hooks/useSetsArray';
+import { NavData } from './NavData';
+
 // import { theme } from '../../../tailwind.config.js';
 
-export default function Nav() {
 
+export default function Nav() {
   //! CHANGE 768 TO USE THE VALUE FROM TAILWIND.CONFIG.JS.THEME.SCREENS.MD
   const isDesktop = useBreakpoint() > 768;
-
+  
   const [showLinkMap, setShowLinkMap] = useState(false);
-
+  const [expandSets, setExpandSets] = useState(false);
+  
   // Collapses the mobile nav menu whenever desktop mode is enabled
   useEffect(() => {
     if (isDesktop) {
@@ -27,13 +32,27 @@ export default function Nav() {
   return (
     <div>
       {isDesktop ? (
-        <nav className="sticky top-8 lg:top-16 flex-none w-64 p-8 mb-8 lg:mb-16">
+        <nav className="flex flex-col gap-y-4 sticky top-8 lg:top-16 flex-none w-64 p-8 mb-8 lg:mb-16 place-items-end">
           <img
             src={require('./../../images/me-square-500px.jpg')}
             alt="it's me"
-            className="sticky mb-8 w-full select-none pointer-events-none"
+            className="sticky mb-4 w-full select-none pointer-events-none"
           />
           <LinkMap isDesktop={isDesktop} />
+          <button onClick={() => (setExpandSets(!expandSets))} className={clsx(
+            isDesktop ? 'text-right text-base' : 'text-center text-xl py-2',
+            expandSets && ' mb-[-0.5rem]',
+            'w-fit',
+            'text-black opacity-75 hover:opacity-100 font-display',
+            'transition-opacity duration-300',
+            'hover:line-through hover:font-bold'
+          )}>
+            <FontAwesomeIcon icon={solid('caret-down')} className="mx-2"/>
+            sets
+          </button>
+          {expandSets && (
+            <SetsLinkMap isDesktop={isDesktop} />
+          )}
           <div className="flex justify-end">
             <SocialMap />
           </div>
@@ -51,6 +70,7 @@ export default function Nav() {
               >
                 <div className="text-center">
                   <LinkMap isDesktop={isDesktop} />
+                  <SetsLinkMap isDesktop={isDesktop} />
                   <div className="h-8" />
                 </div>
               </motion.div>
@@ -73,18 +93,18 @@ export default function Nav() {
 
 function LinkMap({ isDesktop }: { isDesktop: boolean }) {
   return (
-    <ul>
+    <ul className="flex flex-col gap-y-4">
       {navLinks.links.map((link, index) => (
         <li
           key={index}
           className={clsx(
-            isDesktop ? 'text-right text-lg my-4 ' : 'text-center text-xl py-2',
+            isDesktop ? 'text-right text-lg' : 'text-center text-xl py-2',
             'text-black opacity-75 hover:opacity-100 font-display',
             'transition-opacity duration-300'
           )}
         >
           <Link to={link.path} className="hover:line-through hover:font-bold">
-            <span className="select-none text-base">
+            <span className="select-none">
               {link.title}
             </span>
             {link.icon && (
@@ -93,11 +113,38 @@ function LinkMap({ isDesktop }: { isDesktop: boolean }) {
           </Link>
         </li>
       ))}
-      <li>
-        <Link to={'analog'}>
-          analog manual
-        </Link>
-      </li>
+    </ul>
+  );
+}
+
+function SetsLinkMap({ isDesktop }: { isDesktop: boolean }) {
+  // This would be in the NavData.tsx file but since we cannot define sets = useSets() outside of a functional
+  // component, we have to place it right here instead. Pain.
+  const {sets} = useSets();
+  const setLinks: NavData = {
+    links: sets.map((set) => ({
+      title: set.data.name as string,
+      path: `/set/${set.id}` as string,
+    })),
+  };
+
+  return (
+    <ul className="flex flex-col gap-y-4">
+      {setLinks.links.map((link, index) => (
+        <li
+          key={index}
+          className={clsx(
+            isDesktop ? 'text-right text-sm' : 'text-center text-xl py-2',
+            'text-antique-500 font-sans',
+          )}
+        >
+          <Link to={link.path} className="hover:line-through">
+            <span className="select-none">
+              {link.title}
+            </span>
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 }

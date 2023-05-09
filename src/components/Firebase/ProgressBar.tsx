@@ -1,11 +1,11 @@
 import React from 'react';
-import {  useEffect } from 'react';
+import { useEffect } from 'react';
 import { useStoragePhoto } from '../Hooks/useStoragePhoto';
 import clsx from 'clsx';
 
-import { useStoragePhotoArguments } from '../Hooks/useStoragePhoto';
+import { photoArgs } from '../Hooks/useStoragePhoto';
 interface progressBarProps {
-  useStorageArgs: useStoragePhotoArguments;
+  useStorageArgs: photoArgs;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
   setSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -4,8 +4,12 @@ import InputText from '../Atoms/InputText';
 import ProgressBar from './ProgressBar';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuthStateChanged } from '../Hooks/useAuthStateChanged';
-import { useStoragePhotoArguments } from '../Hooks/useStoragePhoto';
+import { photoArgs } from '../Hooks/useStoragePhoto';
+// import { cameraSettings } from '../Hooks/useStoragePhoto';
 import clsx from 'clsx';
+import DocumentDropdown from './DocumentDropdown';
+
+//! BREAK THIS COMPONENT DOWN INTO SMALLER COMPONENTS JESUS CHRIST
 
 export default function FirebaseFileUpload() {
   const [file, setFile] = useState<File | null>(null);
@@ -17,6 +21,8 @@ export default function FirebaseFileUpload() {
   useAuthStateChanged(isAuthenticated => {
     setAuthenticated(isAuthenticated);
   }); 
+
+  const [existingSet, setExistingSet] = useState('');
   
   const [set, setSet] = useState('');
   const [year, setYear] = useState(2023);
@@ -26,6 +32,9 @@ export default function FirebaseFileUpload() {
   const [alt, setAlt] = useState('');
   const [dateTaken, setDateTaken] = useState('');
   const [story, setStory] = useState('');
+
+  //! use this instead of the whole mess of states below???
+  // const [settings, setSettings] = useState<cameraSettings>(null);
   
   const [camera, setCamera] = useState('');
   const [film, setFilm] = useState('');
@@ -39,9 +48,15 @@ export default function FirebaseFileUpload() {
   
   const useStorageArgs = {
     file: file,
-    set: set == '' ? 'noSet' : replaceSpaces(set),
+    // I'm so sorry
+    set: existingSet
+      ? existingSet
+      : set
+        ? set
+        : 'noSet',
+    existingSet: existingSet ? true : false,
     year: year,
-    location: location == '' ? 'nowhere_really' : replaceSpaces(location),
+    location: location ? location : 'nowhere_really',
     title: title,
     alt: alt,
     dateTaken: dateTaken,
@@ -114,31 +129,51 @@ export default function FirebaseFileUpload() {
   // TODO add ability to read EXIF metadata https://www.npmjs.com/package/exifr
 
   return (
-    <div className="w-full p-8 my-8 lg:flex justify-evenly bg-white/50 rounded-3xl shadow-lg">
+    <div className="w-full p-8 my-4 lg:flex justify-evenly bg-white/50 rounded-3xl shadow-lg">
       <div className="w-full lg:w-4/12 flex flex-col gap-y-4">
-        <InputText
-          placeholder='set name (e.g. "Toronto 2021")'
-          maxLength={64}
-          invalid={validateTextInput(set)}
-          onChange={(e) => setSet(e.target.value)}
-        />
-        <div className="flex gap-x-2">
+        <label htmlFor="title" className="text-xs text-antique-700/50">
+          new set name
           <InputText
-            type="number"
-            placeholder="year"
-            maxLength={4}
-            invalid={validateTextInput(set)}
-            onChange={(e) => setYear(parseInt(e.target.value))}
-            className="w-1/4"
-          />
-          <InputText
-            placeholder='location'
+            placeholder='set name (e.g. "Toronto 2021")'
             maxLength={64}
             invalid={validateTextInput(set)}
-            onChange={(e) => setLocation(e.target.value)}
-            className=" flex-1 w-1/2"
+            onChange={(e) => setSet(e.target.value)}
           />
+        </label>
+        <div className="flex gap-x-2">
+          <label htmlFor="title" className="w-1/4 text-xs text-antique-700/50">
+            year
+            <InputText
+              type="number"
+              placeholder="year"
+              maxLength={4}
+              invalid={validateTextInput(set)}
+              onChange={(e) => setYear(parseInt(e.target.value))}
+            />
+          </label>
+          <label htmlFor="title" className="flex-1 text-xs text-antique-700/50">
+            location
+            <InputText
+              placeholder='location'
+              maxLength={64}
+              invalid={validateTextInput(set)}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </label>
+          {
+            //! DO NOT SANITIZE NAME FIELD FOR USER INPUT, BUT DO IT FOR THE ID
+            //! IF USER SELECTED EXISTING SET, THEN UPLOAD TO THE EXISTING SET'S ID
+          }
         </div>
+        {existingSet && (
+          <span>
+            {existingSet}
+          </span>
+        )}
+        <label htmlFor="title" className="text-xs text-antique-700/50">
+          choose existing set
+          <DocumentDropdown onDocumentSelected={setExistingSet} />
+        </label>
         <input
           type="file"
           onChange={handleFileChange}
@@ -181,7 +216,7 @@ export default function FirebaseFileUpload() {
                 Uploading {file.name}
               </span>
               <ProgressBar
-                useStorageArgs={useStorageArgs as useStoragePhotoArguments}
+                useStorageArgs={useStorageArgs as photoArgs}
                 setFile={setFile}
                 setSubmit={setSubmit}
               />
@@ -405,11 +440,6 @@ function validateTextInput(input: string): boolean {
 function validateNumberInput(input: string): boolean {
   const regex = /^(?:18|19|20)\d{2}$/;
   return regex.test(input);
-}
-
-// Trims string, remove consecutive spaces and converts all spaces to underscores
-function replaceSpaces(set: string): string {
-  return set.trim().replace(/\s+/g, ' ').replace(/ /g, '_').replace(/_+/g, '_');
 }
 
 function validateFocalLengthInput(input: string): boolean {

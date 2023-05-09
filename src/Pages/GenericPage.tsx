@@ -6,7 +6,7 @@ interface GenericPageProps {
 
 export default function GenericPage({ children }: GenericPageProps) {
   return (
-    <div className="w-full md:w-md lg:w-lg xl:w-xl 2xl:w-2xl mx-auto p-8">
+    <div className="w-full md:w-md lg:w-lg xl:w-xl 2xl:w-2xl mx-auto p-8 flex flex-col gap-y-4">
       {children}
     </div>
   );

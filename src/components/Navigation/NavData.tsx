@@ -4,10 +4,10 @@ import { solid, brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import { Home, Analog, Blog, About, Secret } from '../../Pages/pageIndex';
 
-interface NavLink {
+ interface NavLink {
   title: string;
   path: string;
-  page: React.ReactNode;
+  page?: React.ReactNode;
   icon?: IconDefinition;
   className?: string;
 }
@@ -35,12 +35,12 @@ export const navLinks: NavData = {
       page: <Home />,
       // icon: solid('home'),
     },
-    {
-      title: 'analog',
-      path: '/analog',
-      page: <Analog />,
-      // icon: solid('camera'),
-    },
+    // {
+    //   title: 'analog',
+    //   path: '/analog',
+    //   page: <Analog />,
+    //   // icon: solid('camera'),
+    // },
     {
       title: 'blog',
       path: '/blog',

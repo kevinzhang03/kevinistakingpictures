@@ -2,22 +2,36 @@ import React from 'react';
 import GenericPage from './GenericPage';
 import PhotoFrame from '../components/PhotoFrame';
 import useFirestorePhoto from '../components/Hooks/useFirestorePhoto';
+import useSet from '../components/Hooks/useSet';
 
-interface photoSetProps {
-  set: string;
-}
+import { useParams } from 'react-router-dom';
 
-export default function PhotoSet({ set }: photoSetProps) {
-  const docs = useFirestorePhoto('calgary');
+// interface photoSetProps {
+//   setID: string;
+//   setName: string;
+//   setLocation: string;
+//   setYear: number;
+//   setBlurb: string;
+// }
+
+export default function PhotoSet() {
+  const {setID} = useParams();
+
+  const {set} = useSet(setID);
+  
+  const docs = useFirestorePhoto(setID);
   console.log(docs);
 
   return (
     <GenericPage>
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4">
-        {set}
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display">
+        {set?.data.name}
       </h1>
+      <h3 className="text-lg md:text-xl lg:text-2xl font-bold font-sans">
+        {set?.data.year}, {set?.data.location}
+      </h3>
       <p className="mb-2 text-base">
-        A little blurb explaining the set. Also lives in the blog page.
+        {'For now, every set has this same generic blurb. Will change! Promise!'}
       </p>
       {docs.docs.map(doc => (
         <PhotoFrame

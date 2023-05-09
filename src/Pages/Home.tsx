@@ -6,16 +6,16 @@ import PhotoFrame from '../components/PhotoFrame';
 export default function Home() {
   return (
     <GenericPage>
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display">
         i should have just used squarespace
       </h1>
-      <p className="mb-2 text-base">
+      <p className="text-base">
         Welcome to my site! It ain't much, but it's my little passion project and I'm glad to have at
         least something up and running on the internet. Please don't mind the dust, the site is still in
         its very early stages and is being worked on. However, the important part is that it allows you
         to view my work with a mildly decent user experience :)
       </p>
-      <p className="mb-2 text-base">
+      <p className="text-base">
         The thing about analog photography I really enjoy is that you can find a scene, you can see what
         you wanna shoot, and you can compose your shot with your camera and just fire your shutter.
         However, in that moment, that's just it. There's no going back to shoot a better shot because
