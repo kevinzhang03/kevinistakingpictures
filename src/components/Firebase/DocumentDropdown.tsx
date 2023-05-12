@@ -36,7 +36,7 @@ export default function DocumentDropdown({ onDocumentSelected }: DocumentDropdow
     <select
       value={selectedDocumentId}
       onChange={handleDocumentSelected}
-      className="w-full p-2 rounded-sm bg-white border border-antique-200 text-sm text-antique-900"
+      className="w-full h-10 p-2 rounded-sm bg-white border border-antique-200 text-sm text-antique-900"
     >
       <option value="">select a set</option>
       {sets.map((doc) => (

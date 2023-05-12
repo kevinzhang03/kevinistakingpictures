@@ -55,7 +55,7 @@ export const useStoragePhoto = (args: photoArgs) => {
   //-----------
 
   useEffect(() => {
-    const storageRef = ref(storage, `${newSetNameID}/${photoNameID}`);
+    const storageRef = ref(storage, `${args.existingSet ? args.set : newSetNameID}/${photoNameID}`);
     const uploadTask = uploadBytesResumable(storageRef, args.file);
 
     // const topLevelCollectionRef = collection(database, 'COLLECTION');
