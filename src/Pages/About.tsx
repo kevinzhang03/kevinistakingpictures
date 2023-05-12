@@ -26,6 +26,9 @@ export default function About() {
         normal day-to-day life of a student, but I guess that's the whole point. It may not seem very special right now,
         but the pictures will have more value the further back you look at them from. Or maybe it's cope!
       </p>
+      <p className="text-base">
+        A better looking about me page is coming soon..
+      </p>
     </GenericPage>
   );
 }
