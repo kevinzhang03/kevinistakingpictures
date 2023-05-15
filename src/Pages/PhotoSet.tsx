@@ -6,14 +6,6 @@ import useSet from '../components/Hooks/useSet';
 
 import { useParams } from 'react-router-dom';
 
-// interface photoSetProps {
-//   setID: string;
-//   setName: string;
-//   setLocation: string;
-//   setYear: number;
-//   setBlurb: string;
-// }
-
 export default function PhotoSet() {
   const {setID} = useParams();
 

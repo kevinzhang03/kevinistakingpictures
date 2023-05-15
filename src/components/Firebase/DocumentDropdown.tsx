@@ -1,29 +1,12 @@
 import React, { useState } from 'react';
 import useSets from '../Hooks/useSetsArray';
 
-// import { photoArgs } from '../Hooks/useStoragePhoto';
-
 interface DocumentDropdownProps {
   onDocumentSelected: (documentId: string) => void;
 }
 
 export default function DocumentDropdown({ onDocumentSelected }: DocumentDropdownProps) {
-  // const [documents, setDocuments] = useState<setDocument[]>([]);
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | undefined>(undefined);
-
-  // useEffect(() => {
-  //   const fetchDocuments = async () => {
-  //     const querySnapshot = await getDocs(collection(database, 'COLLECTION'));
-  //     const fetchedDocuments = querySnapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       data: doc.data(),
-  //     }));
-  //     setDocuments(fetchedDocuments);
-  //   };
-
-  //   fetchDocuments();
-  // }, []);
-
   const {sets} = useSets();
 
   const handleDocumentSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
