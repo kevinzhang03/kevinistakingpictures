@@ -23,7 +23,7 @@ export default function PhotoSet() {
         {set?.data.year}, {set?.data.location}
       </h3>
       <p className="mb-2 text-base">
-        {'For now, every set has this same generic blurb. Will change! Promise!'}
+        {set?.data.description}
       </p>
       {docs.docs.map(doc => (
         <PhotoFrame

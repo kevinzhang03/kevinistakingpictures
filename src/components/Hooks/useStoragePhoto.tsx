@@ -33,6 +33,7 @@ interface setArgs {
   existingSet: boolean;
   year: number;
   location: string;
+  description: string;
 }
 
 export interface photoArgs extends setArgs {
@@ -88,6 +89,7 @@ export const useStoragePhoto = (args: photoArgs) => {
           name: args.set,
           year: args.year,
           location: args.location,
+          description: args.description,
           createdAt: serverTimestamp(),
         });
         

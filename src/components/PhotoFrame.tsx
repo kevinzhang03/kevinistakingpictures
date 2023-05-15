@@ -18,13 +18,13 @@ export default function PhotoFrame({ url, title, alt, date, story, settings }: P
           {title}
         </h3>
       )}
-      <button className="w-full">
-        <img
-          src={url}
-          alt={alt}
-          className="w-full select-none pointer-events-none"
-        />
-      </button>
+      <img
+        src={url}
+        alt={alt}
+        className="w-full select-none pointer-events-none"
+      />
+      {/* <button className="w-full"> */}
+      {/* </button> */}
       <div className="font-display cursor-default text-caption flex justify-between mt-[-0.75rem] italic opacity-50">
         {Settings(settings)}
         {date && (<span className="ml-auto">{date}</span>)}

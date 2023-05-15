@@ -22,11 +22,13 @@ export default function FirebaseFileUpload() {
     setAuthenticated(isAuthenticated);
   }); 
 
+  const [createNewSet, setCreateNewSet] = useState(true);
   const [existingSet, setExistingSet] = useState('');
   
   const [set, setSet] = useState('');
   const [year, setYear] = useState(2023);
   const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
   
   const [title, setTitle] = useState('');
   const [alt, setAlt] = useState('');
@@ -48,15 +50,16 @@ export default function FirebaseFileUpload() {
   
   const useStorageArgs = {
     file: file,
-    // I'm so sorry
+    //! I'm so sorry
     set: existingSet
       ? existingSet
       : set
         ? set
         : 'noSet',
-    existingSet: existingSet ? true : false,
+    existingSet: existingSet && !createNewSet ? true : false,
     year: year,
     location: location ? location : 'nowhere_really',
+    description: description,
     title: title,
     alt: alt,
     dateTaken: dateTaken,
@@ -139,52 +142,97 @@ export default function FirebaseFileUpload() {
         ) : (
           <>
             <div className="w-full lg:w-4/12 flex flex-col gap-y-4">
-              <label htmlFor="new set name" className="text-xs text-antique-700/50">
-                new set name
-                <InputText
-                  id="new set name"
-                  placeholder='set name (e.g. "Toronto 2021")'
-                  maxLength={64}
-                  invalid={validateTextInput(set)}
-                  onChange={(e) => setSet(e.target.value)}
-                />
-              </label>
-              <div className="flex gap-x-2">
-                <label htmlFor="year" className="w-1/4 text-xs text-antique-700/50">
-                  year
-                  <InputText
-                    id="year"
-                    type="number"
-                    placeholder="year"
-                    maxLength={4}
-                    invalid={validateTextInput(set)}
-                    onChange={(e) => setYear(parseInt(e.target.value))}
-                  />
-                </label>
-                <label htmlFor="location" className="flex-1 text-xs text-antique-700/50">
-                  location
-                  <InputText
-                    id="location"
-                    placeholder='location'
-                    maxLength={64}
-                    invalid={validateTextInput(set)}
-                    onChange={(e) => setLocation(e.target.value)}
-                  />
-                </label>
-                {
-                  //! DO NOT SANITIZE NAME FIELD FOR USER INPUT, BUT DO IT FOR THE ID
-                  //! IF USER SELECTED EXISTING SET, THEN UPLOAD TO THE EXISTING SET'S ID
-                }
+              <div className="flex flex-col md:flex-row w-full min-h-[2.5rem] gap-2">
+                <button
+                  disabled={createNewSet}
+                  onClick={() => setCreateNewSet(true)}
+                  className={clsx(
+                    'flex-1 p-2 select-none rounded-sm transition-color duration-300',
+                    createNewSet
+                      ? 'pointer-events-none text-antique-200 bg-antique-400'
+                      : 'text-antique-700 bg-antique-200 hover:bg-antique-300 active:bg-antique-400'
+                  )}
+                >
+                  new set
+                </button>
+                <button
+                  disabled={!createNewSet}
+                  onClick={() => setCreateNewSet(false)}
+                  className={clsx(
+                    'flex-1 p-2 select-none rounded-sm transition-color duration-300',
+                    !createNewSet
+                      ? 'pointer-events-none text-antique-200 bg-antique-400'
+                      : 'text-antique-700 bg-antique-200 hover:bg-antique-300 active:bg-antique-400'
+                  )}
+                >
+                  add to set
+                </button>
               </div>
-              {existingSet && (
-                <span>
-                  {existingSet}
-                </span>
+              {createNewSet ? (
+                <div className="flex flex-col gap-y-4">
+                  <label htmlFor="new set name" className="text-xs text-antique-700/50">
+                    new set name
+                    <InputText
+                      id="new set name"
+                      placeholder="set name"
+                      maxLength={64}
+                      invalid={validateTextInput(set)}
+                      onChange={(e) => setSet(e.target.value)}
+                    />
+                  </label>
+                  <div className="flex gap-x-2">
+                    <label htmlFor="year" className="w-1/4 text-xs text-antique-700/50">
+                      year
+                      <InputText
+                        id="year"
+                        type="number"
+                        placeholder="year"
+                        maxLength={4}
+                        invalid={validateTextInput(set)}
+                        onChange={(e) => setYear(parseInt(e.target.value))}
+                      />
+                    </label>
+                    <label htmlFor="location" className="flex-1 text-xs text-antique-700/50">
+                      location
+                      <InputText
+                        id="location"
+                        placeholder='location'
+                        maxLength={64}
+                        invalid={validateTextInput(set)}
+                        onChange={(e) => setLocation(e.target.value)}
+                      />
+                    </label>
+                    {
+                      //! DO NOT SANITIZE NAME FIELD FOR USER INPUT, BUT DO IT FOR THE ID
+                      //! IF USER SELECTED EXISTING SET, THEN UPLOAD TO THE EXISTING SET'S ID
+                    }
+                  </div>
+                  <label htmlFor="set description" className="text-xs text-antique-700/50">
+                    set description
+                    <textarea
+                      id="set description"
+                      placeholder='write about the set...'
+                      onChange={(e) => setDescription(e.target.value)}
+                      className={clsx(
+                        'block w-full min-h-10 h-24 p-2',
+                        'bg-white border border-antique-200 rounded-sm text-sm select-none',
+                        'text-antique-900 placeholder:italic placeholder:text-antique-500/50',
+                        'focus:outline-none focus:border-periwinkle-200 focus:ring-1 focus:ring-periwinkle-200',
+                        'disabled:opacity-50 disabled:bg-slate-100 disabled:placeholder:blur-[1px]',
+                        'invalid:border-pink-500 invalid:text-pink-600',
+                        'focus:invalid:border-pink-500 focus:invalid:ring-pink-500',
+                      )}
+                    />
+                  </label>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-y-4">
+                  <label htmlFor="choose existing set" className="text-xs text-antique-700/50">
+                    choose existing set
+                    <DocumentDropdown onDocumentSelected={setExistingSet} />
+                  </label>
+                </div>             
               )}
-              <label htmlFor="choose existing set" className="text-xs text-antique-700/50">
-                choose existing set
-                <DocumentDropdown onDocumentSelected={setExistingSet} />
-              </label>
               <input
                 id="choose existing set"
                 type="file"
@@ -214,7 +262,7 @@ export default function FirebaseFileUpload() {
                   rounded-sm transition-color duration-300
                   disabled:pointer-events-none disabled:bg-antique-900/10 disabled:text-antique-900/20"
               >
-                upload photograph
+                {createNewSet ? 'upload first photograph' : 'upload photograph'}
               </button>
               <AnimatePresence>
                 {file && submit && (
