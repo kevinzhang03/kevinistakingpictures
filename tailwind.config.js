@@ -52,7 +52,10 @@ module.exports = {
           900: '#1e1a47',
           950: '#030019',
         },        
-      },  
+      },
+      blur: {
+        '1': '1px',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar')],
