@@ -1,6 +1,7 @@
 import React from 'react';
 
 import GenericPage from './GenericPage';
+import HelloWorld from '../components/HelloWorld';
 
 export default function About() {
   return (
@@ -8,6 +9,7 @@ export default function About() {
       <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display">
         a little about me
       </h1>
+      <HelloWorld />
       <p className="text-base">
         Hi!! I'm Kevin Zhang, currently a second-year student at the University of Waterloo, studying electrical
         engineering. It's a tough program, but I find a lot of enjoyment from it. Digging deep into the technical
@@ -32,3 +34,4 @@ export default function About() {
     </GenericPage>
   );
 }
+
