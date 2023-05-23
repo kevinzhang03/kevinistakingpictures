@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import { useAuthStateChanged } from '../Hooks/useAuthStateChanged';
 
-import { auth, providerGoogle } from './config/firebase';
+import { auth, providerGoogle, providerGithub } from './config/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from '@firebase/auth';
 import InputText from '../Atoms/InputText';
 
@@ -42,7 +42,11 @@ export default function FirebaseLogin() {
   };
   
   const authenticateUserGithub = async () => {
-    // TODO: Call signInWithPopup() with providerGithub
+    try {
+      await signInWithPopup(auth, providerGithub);
+    } catch(err) {
+      console.error(err);
+    }
   };
 
   const logOut = async () => {
