@@ -1,0 +1,19 @@
+* **COLLECTION**, collection  
+	* *set*, document  
+		* `name: string`  
+		* `year: number`  
+		* `location: string`  
+			* **PHOTOGRAPHS**, collection  
+				* *photo*, document  
+					* `url: string`  
+					* `title: string`  
+					* `alt: string`  
+					* `date: string`  
+					* `story: string`    				* `settings: map`  
+						* `{camera: string,`   						* `film: string,`   						* `lens: string,`  
+						* `focalLength: string,`  
+						* `aperture: string,`  
+						* `shutterSpeed: string,`  
+						* `ISO: number,`
+						* `lensFilter: string,}`
+
