@@ -40,6 +40,10 @@ export default function FirebaseLogin() {
       console.error(err);
     }
   };
+  
+  const authenticateUserGithub = async () => {
+    // TODO: Call signInWithPopup() with providerGithub
+  };
 
   const logOut = async () => {
     try {
@@ -126,6 +130,15 @@ export default function FirebaseLogin() {
               rounded-sm transition-all duration-300"
           >
             <FontAwesomeIcon icon={brands('google')}/>
+          </button>
+          <button
+            onClick={authenticateUserGithub}
+            className="flex-none w-10 p-2 select-none
+              text-antique-700
+              bg-antique-200 hover:bg-antique-300 active:bg-antique-400
+              rounded-sm transition-all duration-300"
+          >
+            <FontAwesomeIcon icon={brands('github')}/>
           </button>
         </div>
         <div className="mt-4 w-full">
