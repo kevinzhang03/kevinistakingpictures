@@ -26,6 +26,7 @@ export type cameraSettings = {
   aperture: string,
   shutterSpeed: string,
   iso: string,
+  lensFilter: string, 
 } | null;
 
 interface setArgs {
@@ -43,6 +44,7 @@ export interface photoArgs extends setArgs {
   dateTaken: string;
   story: string;
   settings: cameraSettings;
+  lensFilter: string;
 }
 
 export const useStoragePhoto = (args: photoArgs) => {
@@ -120,3 +122,4 @@ export const useStoragePhoto = (args: photoArgs) => {
   return { progress, url, error };
   
 };
+
