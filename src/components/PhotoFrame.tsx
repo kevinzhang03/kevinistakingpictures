@@ -42,7 +42,7 @@ function Settings(settings: cameraSettings) {
         <span>
           {
             [
-              [settings.camera, settings.film, settings.lens],
+              [settings.camera, settings.film, settings.lens, settings.lensFilter],
               [settings.focalLength, settings.aperture, settings.shutterSpeed, settings.iso],
             ]
               .map((fields) => fields.filter(Boolean).join(', '))
@@ -54,3 +54,4 @@ function Settings(settings: cameraSettings) {
     </>
   );
 }
+
