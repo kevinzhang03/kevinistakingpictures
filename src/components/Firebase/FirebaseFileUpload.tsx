@@ -45,6 +45,7 @@ export default function FirebaseFileUpload() {
   const [aperture, setAperture] = useState('');
   const [shutterSpeed, setShutterSpeed] = useState('');
   const [iso, setIso] = useState('');
+  const [lensFilter, setLensFilter] = useState('');
 
   const [includeSettings, setIncludeSettings] = useState(false);
   
@@ -72,6 +73,7 @@ export default function FirebaseFileUpload() {
       'aperture': aperture,
       'shutterSpeed': shutterSpeed,
       'iso': iso,
+      'lensFilter': lensFilter,
     } : null
   };
   
@@ -106,6 +108,7 @@ export default function FirebaseFileUpload() {
     setAperture('');
     setShutterSpeed('');
     setIso('');
+    setLensFilter('');
   };
 
   useEffect(() => {
@@ -405,6 +408,16 @@ export default function FirebaseFileUpload() {
                       onChange={(e) => setLens(e.target.value)}
                     />
                   </label>
+                  <label htmlFor="lens filter" className="text-xs text-antique-700/50">
+                  lens filter
+                    <InputText
+                      id="lens filter"
+                      type="text"
+                      placeholder='UV'
+                      maxLength={64}
+                      onChange={(e) => setLensFilter(e.target.value)}
+                    />
+                  </label>
                   <div className="flex gap-x-2">
                     <label
                       htmlFor="focal length"
@@ -524,3 +537,4 @@ function validateISOInput(input: string): boolean {
   const regex = /^$|^[1-9][0-9]*$/;
   return regex.test(input);
 }
+
