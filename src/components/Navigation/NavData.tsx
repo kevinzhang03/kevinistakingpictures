@@ -2,7 +2,7 @@ import React from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { solid, brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 
-import { Home, Analog, Blog, About, Secret } from '../../Pages/pageIndex';
+import { Home, Analog, Blog, About, Admin } from '../../Pages/pageIndex';
 
  interface NavLink {
   title: string;
@@ -54,9 +54,9 @@ export const navLinks: NavData = {
       // icon: solid('address-card'),
     },
     {
-      title: 'secret',
-      path: '/secret',
-      page: <Secret />,
+      title: 'admin',
+      path: '/admin',
+      page: <Admin />,
       // icon: solid('file-lines'),
     },
   ]
