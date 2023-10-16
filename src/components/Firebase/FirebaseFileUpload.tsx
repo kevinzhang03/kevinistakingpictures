@@ -133,12 +133,9 @@ export default function FirebaseFileUpload() {
 
   return (
     <div>
-      <span className="text-xs italic text-antique-700 select-none pointer-events-none">
-        just a heads up: for now, only i am authorized to upload content to my site. let me cook in the meantime...
-      </span>
       <div className="w-full p-8 my-4 lg:flex justify-evenly bg-white/50 rounded-3xl shadow-lg">
         {!authenticated ? (
-          <span className="italic text-antique-700/50 select-none pointer-events-none">please sign in to access upload tool</span>
+          <span className="italic text-antique-700/50 select-none pointer-events-none">admin stuff</span>
         ) : (
           <>
             <div className="w-full lg:w-4/12 flex flex-col gap-y-4">
