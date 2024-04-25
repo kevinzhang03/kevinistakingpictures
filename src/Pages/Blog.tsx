@@ -14,6 +14,12 @@ export default function Blog() {
       <p className="text-base">
         cooking...
       </p>
+      <p className="text-base">
+        ...
+      </p>
+      <p className="text-base">
+        still cooking...
+      </p>
     </GenericPage>
   );
 }
